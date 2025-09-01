@@ -1,0 +1,169 @@
+[2025-09-01 08:32:47] --- Connection test started ---
+[2025-09-01 08:32:47] Ports to try: ['COM3']
+[2025-09-01 08:32:47] Trying COM3 at 115200 8N1...
+[2025-09-01 08:32:47] Open/communicate failed for COM3: SerialException("could not open port 'COM3': PermissionError(13, 'Access is denied.', None, 5)")
+[2025-09-01 08:32:47] No working port found
+[2025-09-01 08:47:20] --- Connection test started ---
+[2025-09-01 08:47:20] Drivers not available: sensirion_shdlc_driver / sensirion_shdlc_sps
+[2025-09-01 08:48:24] --- Connection test started ---
+[2025-09-01 08:48:24] Drivers not available: sensirion_shdlc_driver / sensirion_shdlc_sps
+[2025-09-01 08:55:49] --- Connection test started ---
+[2025-09-01 08:55:49] Ports to try: ['COM3']
+[2025-09-01 08:55:49] Trying COM3 at 115200 8N1...
+[2025-09-01 08:55:49] Open/communicate failed for COM3: SerialException("could not open port 'COM3': PermissionError(13, 'Access is denied.', None, 5)")
+[2025-09-01 08:55:49] No working port found
+[2025-09-01 09:02:17] --- Connection test started ---
+[2025-09-01 09:02:17] Ports to try: ['COM3']
+[2025-09-01 09:02:17] Trying COM3 at 115200 8N1...
+[2025-09-01 09:02:18] OK on COM3 (SN: ACE26E8B52D43AD0)
+[2025-09-01 09:04:20] --- Connection test started ---
+[2025-09-01 09:04:20] Ports to try: ['COM3']
+[2025-09-01 09:04:20] Trying COM3 at 115200 8N1...
+[2025-09-01 09:04:21] OK on COM3 (SN: ACE26E8B52D43AD0)
+[2025-09-01 09:09:42] --- Connection test started ---
+[2025-09-01 09:09:42] Ports to try: ['COM1', 'COM3']
+[2025-09-01 09:09:42] Trying COM1 at 115200 8N1...
+[2025-09-01 09:09:42] device_information_serial_number threw: ShdlcTimeoutError('Timeout while waiting for response from SHDLC device. Check connection to device and make sure it is powered on.')
+[2025-09-01 09:09:42] get_serial_number threw: NameError("name 'device_information_serial_number' is not defined")
+[2025-09-01 09:09:42] No response on COM1
+[2025-09-01 09:09:42] Trying COM3 at 115200 8N1...
+[2025-09-01 09:09:42] Open/communicate failed for COM3: SerialException("could not open port 'COM3': PermissionError(13, 'Access is denied.', None, 5)")
+[2025-09-01 09:09:42] No working port found
+[2025-09-01 09:09:55] --- Connection test started ---
+[2025-09-01 09:09:55] Ports to try: ['COM1', 'COM3']
+[2025-09-01 09:09:55] Trying COM1 at 115200 8N1...
+[2025-09-01 09:09:56] device_information_serial_number threw: ShdlcTimeoutError('Timeout while waiting for response from SHDLC device. Check connection to device and make sure it is powered on.')
+[2025-09-01 09:09:56] get_serial_number threw: NameError("name 'device_information_serial_number' is not defined")
+[2025-09-01 09:09:56] No response on COM1
+[2025-09-01 09:09:56] Trying COM3 at 115200 8N1...
+[2025-09-01 09:09:56] Open/communicate failed for COM3: SerialException("could not open port 'COM3': PermissionError(13, 'Access is denied.', None, 5)")
+[2025-09-01 09:09:56] No working port found
+[2025-09-01 09:12:16] --- Connection test started ---
+[2025-09-01 09:12:16] Ports to try: ['COM1', 'COM3']
+[2025-09-01 09:12:16] Trying COM1 at 115200 8N1...
+[2025-09-01 09:12:17] device_information_serial_number threw: ShdlcTimeoutError('Timeout while waiting for response from SHDLC device. Check connection to device and make sure it is powered on.')
+[2025-09-01 09:12:17] get_serial_number threw: NameError("name 'device_information_serial_number' is not defined")
+[2025-09-01 09:12:17] No response on COM1
+[2025-09-01 09:12:17] Trying COM3 at 115200 8N1...
+[2025-09-01 09:12:17] Open/communicate failed for COM3: SerialException("could not open port 'COM3': PermissionError(13, 'Access is denied.', None, 5)")
+[2025-09-01 09:12:17] No working port found
+[2025-09-01 09:12:29] --- Connection test started ---
+[2025-09-01 09:12:29] Ports to try: ['COM1', 'COM3']
+[2025-09-01 09:12:29] Trying COM1 at 115200 8N1...
+[2025-09-01 09:12:29] Open/communicate failed for COM1: SerialException("could not open port 'COM1': PermissionError(13, 'Access is denied.', None, 5)")
+[2025-09-01 09:12:29] Trying COM3 at 115200 8N1...
+[2025-09-01 09:12:29] OK on COM3 (SN: ACE26E8B52D43AD0)
+[2025-09-01 09:29:08] --- Connection test started ---
+[2025-09-01 09:29:09] Ports to try: ['COM1', 'COM3']
+[2025-09-01 09:29:09] Trying COM1 at 115200 8N1...
+[2025-09-01 09:29:10] device_information_serial_number threw: ShdlcTimeoutError('Timeout while waiting for response from SHDLC device. Check connection to device and make sure it is powered on.')
+[2025-09-01 09:29:10] get_serial_number threw: NameError("name 'device_information_serial_number' is not defined")
+[2025-09-01 09:29:10] No response on COM1
+[2025-09-01 09:29:10] Trying COM3 at 115200 8N1...
+[2025-09-01 09:29:10] Open/communicate failed for COM3: SerialException("could not open port 'COM3': PermissionError(13, 'Access is denied.', None, 5)")
+[2025-09-01 09:29:10] No working port found
+[2025-09-01 09:29:45] --- Connection test started ---
+[2025-09-01 09:29:45] Ports to try: ['COM1', 'COM3']
+[2025-09-01 09:29:45] Trying COM1 at 115200 8N1...
+[2025-09-01 09:29:46] device_information_serial_number threw: ShdlcTimeoutError('Timeout while waiting for response from SHDLC device. Check connection to device and make sure it is powered on.')
+[2025-09-01 09:29:46] get_serial_number threw: NameError("name 'device_information_serial_number' is not defined")
+[2025-09-01 09:29:46] No response on COM1
+[2025-09-01 09:29:46] Trying COM3 at 115200 8N1...
+[2025-09-01 09:29:46] Open/communicate failed for COM3: SerialException("could not open port 'COM3': PermissionError(13, 'Access is denied.', None, 5)")
+[2025-09-01 09:29:46] No working port found
+[2025-09-01 09:33:49] --- Connection test started ---
+[2025-09-01 09:33:49] Ports to try: ['COM3']
+[2025-09-01 09:33:49] Trying COM3 at 115200 8N1...
+[2025-09-01 09:33:49] OK on COM3 (SN: ACE26E8B52D43AD0)
+[2025-09-01 10:01:13] --- Connection test started ---
+[2025-09-01 10:01:14] Ports to try: ['COM3']
+[2025-09-01 10:01:14] Trying COM3 at 115200 8N1...
+[2025-09-01 10:01:14] OK on COM3 (SN: ACE26E8B52D43AD0)
+[2025-09-01 10:04:51] --- Connection test started ---
+[2025-09-01 10:04:51] Ports to try: ['COM3']
+[2025-09-01 10:04:51] Trying COM3 at 115200 8N1...
+[2025-09-01 10:04:52] OK on COM3 (SN: ACE26E8B52D43AD0)
+[2025-09-01 10:07:46] Using SHDLC driver on COM1
+[2025-09-01 10:08:12] Using SHDLC driver on COM3
+[2025-09-01 10:08:12] Measurement started (SHDLC)
+[2025-09-01 10:08:30] --- Connection test started ---
+[2025-09-01 10:08:30] Ports to try: ['COM3']
+[2025-09-01 10:08:30] Trying COM3 at 115200 8N1...
+[2025-09-01 10:08:31] OK on COM3 (SN: ACE26E8B52D43AD0)
+[2025-09-01 10:08:32] Using SHDLC driver on COM3
+[2025-09-01 10:09:03] Using SHDLC driver on COM3
+[2025-09-01 10:09:03] Measurement started (SHDLC)
+[2025-09-01 10:10:42] Using SHDLC driver on COM1
+[2025-09-01 10:10:42] SHDLC device methods: ['read_auto_cleaning_interval', 'read_device_status_register', 'read_measured_value', 'read_version']
+[2025-09-01 10:10:51] Using SHDLC driver on COM3
+[2025-09-01 10:10:51] SHDLC device methods: ['read_auto_cleaning_interval', 'read_device_status_register', 'read_measured_value', 'read_version']
+[2025-09-01 10:10:51] Measurement started (SHDLC)
+[2025-09-01 10:11:02] --- Connection test started ---
+[2025-09-01 10:11:02] Ports to try: ['COM3']
+[2025-09-01 10:11:02] Trying COM3 at 115200 8N1...
+[2025-09-01 10:11:03] OK on COM3 (SN: ACE26E8B52D43AD0)
+[2025-09-01 10:11:03] Using SHDLC driver on COM3
+[2025-09-01 10:11:03] SHDLC device methods: ['read_auto_cleaning_interval', 'read_device_status_register', 'read_measured_value', 'read_version']
+[2025-09-01 10:11:35] Using SHDLC driver on COM1
+[2025-09-01 10:11:35] SHDLC device methods: ['read_auto_cleaning_interval', 'read_device_status_register', 'read_measured_value', 'read_version']
+[2025-09-01 10:11:42] Legacy read exception: AttributeError("'NoneType' object has no attribute 'read_measured_value'")
+[2025-09-01 10:11:42] Using SHDLC driver on COM3
+[2025-09-01 10:11:42] SHDLC device methods: ['read_auto_cleaning_interval', 'read_device_status_register', 'read_measured_value', 'read_version']
+[2025-09-01 10:11:42] Measurement started (SHDLC)
+[2025-09-01 10:11:49] Sample legacy pm2.5=nan
+[2025-09-01 10:12:23] Using UART driver on COM1
+[2025-09-01 10:12:23] UART device methods: ['read_auto_cleaning_interval', 'read_device_status_register', 'read_measurement_values_float', 'read_measurement_values_uint16', 'read_product_type', 'read_serial_number', 'read_version']
+[2025-09-01 10:12:31] UART read exception: ShdlcTimeoutError('Timeout while waiting for response from SHDLC device. Check connection to device and make sure it is powered on.')
+[2025-09-01 10:12:34] UART read exception: AttributeError("'NoneType' object has no attribute 'read_measurement_values_uint16'")
+[2025-09-01 10:12:34] Using UART driver on COM3
+[2025-09-01 10:12:34] UART device methods: ['read_auto_cleaning_interval', 'read_device_status_register', 'read_measurement_values_float', 'read_measurement_values_uint16', 'read_product_type', 'read_serial_number', 'read_version']
+[2025-09-01 10:12:34] Measurement started (UART, 261)
+[2025-09-01 10:12:42] Sample UART mc_2p5=2.0
+[2025-09-01 10:13:52] Sample UART mc_2p5=1.0
+[2025-09-01 10:17:50] Using UART driver on COM1
+[2025-09-01 10:17:50] UART device methods: ['read_auto_cleaning_interval', 'read_device_status_register', 'read_measurement_values_float', 'read_measurement_values_uint16', 'read_product_type', 'read_serial_number', 'read_version']
+[2025-09-01 10:17:59] UART read exception: ShdlcTimeoutError('Timeout while waiting for response from SHDLC device. Check connection to device and make sure it is powered on.')
+[2025-09-01 10:18:01] UART read exception: AttributeError("'NoneType' object has no attribute 'read_measurement_values_uint16'")
+[2025-09-01 10:18:02] Using UART driver on COM3
+[2025-09-01 10:18:02] UART device methods: ['read_auto_cleaning_interval', 'read_device_status_register', 'read_measurement_values_float', 'read_measurement_values_uint16', 'read_product_type', 'read_serial_number', 'read_version']
+[2025-09-01 10:18:10] Sample UART mc_2p5=1091.0
+[2025-09-01 10:18:27] Using SHDLC driver on COM1
+[2025-09-01 10:18:27] SHDLC device methods: ['read_auto_cleaning_interval', 'read_device_status_register', 'read_measured_value', 'read_version']
+[2025-09-01 10:18:35] Legacy read exception: ShdlcTimeoutError('Timeout while waiting for response from SHDLC device. Check connection to device and make sure it is powered on.')
+[2025-09-01 10:18:37] Legacy read exception: ShdlcTimeoutError('Timeout while waiting for response from SHDLC device. Check connection to device and make sure it is powered on.')
+[2025-09-01 10:18:38] Legacy read exception: SerialException("WriteFile failed (OSError(9, 'The handle is invalid.', None, 6))")
+[2025-09-01 10:18:39] Using SHDLC driver on COM3
+[2025-09-01 10:18:39] SHDLC device methods: ['read_auto_cleaning_interval', 'read_device_status_register', 'read_measured_value', 'read_version']
+[2025-09-01 10:18:39] Measurement started (SHDLC)
+[2025-09-01 10:18:42] --- Connection test started ---
+[2025-09-01 10:18:42] Ports to try: ['COM3']
+[2025-09-01 10:18:42] Trying COM3 at 115200 8N1...
+[2025-09-01 10:18:42] Open/communicate failed for COM3: SerialException("could not open port 'COM3': PermissionError(13, 'Access is denied.', None, 5)")
+[2025-09-01 10:18:42] No working port found
+[2025-09-01 10:18:42] Using SHDLC driver on COM3
+[2025-09-01 10:18:42] SHDLC device methods: ['read_auto_cleaning_interval', 'read_device_status_register', 'read_measured_value', 'read_version']
+[2025-09-01 10:18:48] Sample legacy pm2.5=nan
+[2025-09-01 10:19:21] --- Connection test started ---
+[2025-09-01 10:19:22] Ports to try: ['COM3']
+[2025-09-01 10:19:22] Trying COM3 at 115200 8N1...
+[2025-09-01 10:19:22] OK on COM3 (SN: ACE26E8B52D43AD0)
+[2025-09-01 10:19:22] Using SHDLC driver on COM3
+[2025-09-01 10:19:22] SHDLC device methods: ['read_auto_cleaning_interval', 'read_device_status_register', 'read_measured_value', 'read_version']
+[2025-09-01 10:19:53] Sample legacy pm2.5=nan
+[2025-09-01 10:21:27] Using SHDLC driver on COM1
+[2025-09-01 10:21:27] SHDLC device methods: ['read_auto_cleaning_interval', 'read_device_status_register', 'read_measured_value', 'read_version']
+[2025-09-01 10:21:34] Legacy read exception: ShdlcTimeoutError('Timeout while waiting for response from SHDLC device. Check connection to device and make sure it is powered on.')
+[2025-09-01 10:21:35] Using SHDLC driver on COM3
+[2025-09-01 10:21:35] SHDLC device methods: ['read_auto_cleaning_interval', 'read_device_status_register', 'read_measured_value', 'read_version']
+[2025-09-01 10:21:35] Measurement started (SHDLC)
+[2025-09-01 10:21:42] Legacy raw measurement: ((0.6598722338676453, 0.6977899074554443, 0.6977897882461548, 0.6977897882461548), (4.557422161102295, 5.2499589920043945, 5.266338348388672, 5.267822265625, 5.268670082092285), 0.40580224990844727) (tuple)
+[2025-09-01 10:22:12] Legacy raw measurement: ((0.6517636179924011, 0.689215362071991, 0.6892152428627014, 0.6892152428627014), (4.501420021057129, 5.185446739196777, 5.201624870300293, 5.203090667724609, 5.203927993774414), 0.37218475341796875) (tuple)
+[2025-09-01 10:37:17] Using SHDLC driver on COM1
+[2025-09-01 10:37:17] SHDLC device methods: ['read_auto_cleaning_interval', 'read_device_status_register', 'read_measured_value', 'read_version']
+[2025-09-01 10:37:25] Legacy read exception: ShdlcTimeoutError('Timeout while waiting for response from SHDLC device. Check connection to device and make sure it is powered on.')
+[2025-09-01 10:37:27] Legacy read exception: ShdlcTimeoutError('Timeout while waiting for response from SHDLC device. Check connection to device and make sure it is powered on.')
+[2025-09-01 10:37:29] Legacy read exception: ShdlcTimeoutError('Timeout while waiting for response from SHDLC device. Check connection to device and make sure it is powered on.')
+[2025-09-01 10:37:29] Using SHDLC driver on COM3
+[2025-09-01 10:37:29] SHDLC device methods: ['read_auto_cleaning_interval', 'read_device_status_register', 'read_measured_value', 'read_version']
+[2025-09-01 10:37:36] Legacy raw measurement: ((0.5326587557792664, 0.5632665157318115, 0.563266396522522, 0.563266396522522), (3.678819417953491, 4.2378458976745605, 4.251067638397217, 4.252265453338623, 4.2529497146606445), 0.4040088653564453) (tuple)
+[2025-09-01 10:38:06] Legacy raw measurement: ((0.7207169532775879, 0.7621309161186218, 0.7621307969093323, 0.7621307969093323), (4.97764778137207, 5.734041213989258, 5.751931190490723, 5.753551483154297, 5.754477500915527), 0.4048922061920166) (tuple)

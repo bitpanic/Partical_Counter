@@ -109,6 +109,195 @@ def write_connection_log(message):
         pass
 
 
+def load_last_port():
+    try:
+        ensure_dir(CONFIG.log_dir)
+        path = os.path.join(CONFIG.log_dir, 'last_port.txt')
+        if os.path.isfile(path):
+            with open(path, 'r', encoding='utf-8') as f:
+                line = (f.readline() or '').strip()
+                return line or None
+    except Exception:
+        return None
+    return None
+
+
+def save_last_port(port_name):
+    try:
+        if not port_name:
+            return
+        ensure_dir(CONFIG.log_dir)
+        path = os.path.join(CONFIG.log_dir, 'last_port.txt')
+        with open(path, 'w', encoding='utf-8') as f:
+            f.write(str(port_name).strip())
+    except Exception:
+        pass
+
+
+def is_autostart_supported():
+    return sys.platform == 'win32'
+
+
+def _autostart_reg_path():
+    return r"Software\\Microsoft\\Windows\\CurrentVersion\\Run"
+
+
+def _autostart_value_name():
+    # Use app name as registry value name
+    return CONFIG.app_name
+
+
+def get_autostart_command():
+    # Command that launches this app
+    if getattr(sys, 'frozen', False):
+        return f'"{sys.executable}"'
+    # Development mode fallback
+    return f'"{sys.executable}" "{os.path.abspath(__file__)}"'
+
+
+def is_autostart_enabled():
+    if not is_autostart_supported():
+        return False
+    try:
+        import winreg  # type: ignore
+        with winreg.OpenKey(winreg.HKEY_CURRENT_USER, _autostart_reg_path(), 0, winreg.KEY_READ) as key:
+            try:
+                val, _ = winreg.QueryValueEx(key, _autostart_value_name())
+                return bool(val)
+            except FileNotFoundError:
+                return False
+    except Exception:
+        return False
+
+
+def set_autostart_enabled(enabled):
+    if not is_autostart_supported():
+        return False
+    try:
+        import winreg  # type: ignore
+        if enabled:
+            with winreg.CreateKeyEx(winreg.HKEY_CURRENT_USER, _autostart_reg_path(), 0, winreg.KEY_SET_VALUE) as key:
+                winreg.SetValueEx(key, _autostart_value_name(), 0, winreg.REG_SZ, get_autostart_command())
+        else:
+            try:
+                with winreg.OpenKey(winreg.HKEY_CURRENT_USER, _autostart_reg_path(), 0, winreg.KEY_SET_VALUE) as key:
+                    winreg.DeleteValue(key, _autostart_value_name())
+            except FileNotFoundError:
+                pass
+        return True
+    except Exception:
+        return False
+
+
+def is_autostart_enabled_all_users():
+    if not is_autostart_supported():
+        return False
+    try:
+        import winreg  # type: ignore
+        with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, _autostart_reg_path(), 0, winreg.KEY_READ) as key:
+            try:
+                val, _ = winreg.QueryValueEx(key, _autostart_value_name())
+                return bool(val)
+            except FileNotFoundError:
+                return False
+    except Exception:
+        return False
+
+
+def set_autostart_enabled_all_users(enabled):
+    if not is_autostart_supported():
+        return False
+    try:
+        import winreg  # type: ignore
+        if enabled:
+            with winreg.CreateKeyEx(winreg.HKEY_LOCAL_MACHINE, _autostart_reg_path(), 0, winreg.KEY_SET_VALUE) as key:
+                winreg.SetValueEx(key, _autostart_value_name(), 0, winreg.REG_SZ, get_autostart_command())
+        else:
+            try:
+                with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, _autostart_reg_path(), 0, winreg.KEY_SET_VALUE) as key:
+                    winreg.DeleteValue(key, _autostart_value_name())
+            except FileNotFoundError:
+                pass
+        return True
+    except Exception:
+        return False
+
+
+def _startup_folder_path_current_user():
+    try:
+        base = os.environ.get('APPDATA')
+        if not base:
+            return None
+        return os.path.join(base, 'Microsoft', 'Windows', 'Start Menu', 'Programs', 'Startup')
+    except Exception:
+        return None
+
+
+def _startup_shortcut_path():
+    folder = _startup_folder_path_current_user()
+    if not folder:
+        return None
+    return os.path.join(folder, f"{CONFIG.app_name}.lnk")
+
+
+def is_startup_shortcut_enabled():
+    try:
+        path = _startup_shortcut_path()
+        return bool(path and os.path.isfile(path))
+    except Exception:
+        return False
+
+
+def _create_shortcut(path, target_path, args, workdir, icon_path):
+    # Use PowerShell to create a .lnk via WScript.Shell COM without extra deps
+    try:
+        cmd = (
+            "powershell",
+            "-NoProfile",
+            "-Command",
+            (
+                "$W=New-Object -ComObject WScript.Shell;"
+                f"$S=$W.CreateShortcut('{path}');"
+                f"$S.TargetPath='{target_path}';"
+                f"$S.Arguments='{args}';"
+                f"$S.WorkingDirectory='{workdir}';"
+                f"$S.IconLocation='{icon_path},0';"
+                "$S.Save()"
+            ),
+        )
+        subprocess.run(cmd, capture_output=True)
+        return os.path.isfile(path)
+    except Exception:
+        return False
+
+
+def enable_startup_shortcut(enable):
+    try:
+        path = _startup_shortcut_path()
+        if not path:
+            return False
+        if enable:
+            if getattr(sys, 'frozen', False):
+                target = sys.executable
+                args = ''
+                workdir = os.path.dirname(sys.executable)
+                icon = sys.executable
+            else:
+                target = sys.executable
+                args = os.path.abspath(__file__)
+                workdir = os.path.dirname(os.path.abspath(__file__))
+                icon = target
+            return _create_shortcut(path, target, args, workdir, icon)
+        else:
+            try:
+                if os.path.isfile(path):
+                    os.remove(path)
+            except Exception:
+                pass
+            return not os.path.isfile(path)
+    except Exception:
+        return False
+
 def get_asset_path(*parts):
     try:
         base = getattr(sys, '_MEIPASS', None) or os.path.abspath(os.path.dirname(__file__))
@@ -131,6 +320,33 @@ def load_logo_pil(desired_size=64):
     except Exception:
         return None
     return None
+
+
+def _nice_upper_bound(value):
+    """Return a "nice" rounded-up upper y-limit for plotting.
+
+    Uses a 1-2-5 step on powers of 10 and a 10% headroom.
+    """
+    try:
+        v = float(value)
+        if not (v == v) or v <= 0.0:
+            return 1.0
+        v *= 1.10  # headroom
+        import math
+        exp = math.floor(math.log10(v))
+        base = 10 ** exp
+        frac = v / base
+        if frac <= 1:
+            nice = 1
+        elif frac <= 2:
+            nice = 2
+        elif frac <= 5:
+            nice = 5
+        else:
+            nice = 10
+        return nice * base
+    except Exception:
+        return 1.0
 
 def detect_serial_ports():
     """Return a list of available COM ports on Windows like ["COM3", "COM5"].
@@ -221,6 +437,67 @@ class SPS30Reader:
             self._thread.join(timeout=3.0)
             self._thread = None
         self._disconnect()
+
+    def start_fan_cleaning(self):
+        """Trigger the SPS30 fan cleaning if supported by the active driver.
+
+        Returns True on success, False otherwise.
+        """
+        dev = self._device
+        if dev is None:
+            try:
+                write_connection_log('Fan cleaning requested but device is None')
+            except Exception:
+                pass
+            return False
+        # Some drivers require measurement to be stopped; attempt gracefully
+        try:
+            if hasattr(dev, 'stop_measurement'):
+                try:
+                    dev.stop_measurement()
+                except Exception:
+                    pass
+            # Try common method names across UART/SHDLC variants
+            method_names = [
+                'start_fan_cleaning',
+                'start_manual_cleaning',
+                'fan_cleaning',
+            ]
+            called = False
+            for name in method_names:
+                if hasattr(dev, name):
+                    try:
+                        getattr(dev, name)()
+                        called = True
+                        break
+                    except Exception as e:
+                        try:
+                            write_connection_log(f'Cleaning method {name} failed: {e!r}')
+                        except Exception:
+                            pass
+            if not called:
+                try:
+                    write_connection_log('Fan cleaning not supported by driver')
+                except Exception:
+                    pass
+                return False
+            # Restart measurement after cleaning
+            try:
+                self._measurement_started = False
+                self._ensure_started()
+            except Exception:
+                pass
+            try:
+                write_connection_log('Fan cleaning started')
+            except Exception:
+                pass
+            return True
+        except Exception as e:
+            try:
+                write_connection_log(f'Fan cleaning error: {e!r}')
+            except Exception:
+                pass
+            return False
 
     def set_port(self, port_name):
         """Change the target COM port at runtime. None => auto-scan."""
@@ -322,6 +599,10 @@ class SPS30Reader:
 
                 # Initial warm-up before first reads
                 self._warmup_deadline = time.time() + 5.0
+                try:
+                    save_last_port(port_name)
+                except Exception:
+                    pass
                 return True
             except Exception:
                 # Try next port
@@ -365,7 +646,8 @@ class SPS30Reader:
             pass
 
     def _read_measurement(self):
-        if self._device is None:
+        dev = self._device
+        if dev is None:
             return None
         try:
             # Respect warm-up period after (re)connect
@@ -373,20 +655,20 @@ class SPS30Reader:
                 time.sleep(0.2)
                 return None
             # Legacy SHDLC driver path
-            if hasattr(self._device, 'read_measured_values') or hasattr(self._device, 'read_measured_value'):
+            if hasattr(dev, 'read_measured_values') or hasattr(dev, 'read_measured_value'):
                 for _ in range(10):
                     try:
-                        if hasattr(self._device, 'is_data_ready') and self._device.is_data_ready():
+                        if hasattr(dev, 'is_data_ready') and dev.is_data_ready():
                             break
                     except Exception:
                         break
                     time.sleep(0.1)
 
                 try:
-                    if hasattr(self._device, 'read_measured_values'):
-                        m = self._device.read_measured_values()
+                    if hasattr(dev, 'read_measured_values'):
+                        m = dev.read_measured_values()
                     else:
-                        m = self._device.read_measured_value()
+                        m = dev.read_measured_value()
                     try:
                         self._debug_sample_counter += 1
                         if self._debug_sample_counter % 10 == 1:
@@ -445,29 +727,38 @@ class SPS30Reader:
                 return Sample(ts=datetime.now(), pm1=pm1, pm25=pm25, pm4=pm4, pm10=pm10)
 
             # Modern UART driver path
-            if hasattr(self._device, 'read_measurement_values_uint16'):
+            if hasattr(dev, 'read_measurement_values_float') or hasattr(dev, 'read_measurement_values_uint16'):
                 try:
                     # If device exposes data_ready or similar, poll briefly
                     for _ in range(20):
                         try:
-                            if hasattr(self._device, 'is_data_ready') and self._device.is_data_ready():
+                            if hasattr(dev, 'is_data_ready') and dev.is_data_ready():
                                 break
                         except Exception:
                             break
                         time.sleep(0.1)
-                    values = self._device.read_measurement_values_uint16()
-                    mc_1p0, mc_2p5, mc_4p0, mc_10p0 = float(values[0]), float(values[1]), float(values[2]), float(values[3])
-                    try:
-                        # Heuristic: some UART firmwares return fixed-point values (e.g. 5000 for 0.5 µg/m³).
-                        # If readings look unrealistically large, downscale by 1e5 to land in typical µg/m³ range.
-                        max_val = max(mc_1p0, mc_2p5, mc_4p0, mc_10p0)
-                        if max_val > 1000.0:
-                            mc_1p0 /= 100000.0
-                            mc_2p5 /= 100000.0
-                            mc_4p0 /= 100000.0
-                            mc_10p0 /= 100000.0
-                    except Exception:
-                        pass
+                    if hasattr(dev, 'read_measurement_values_float'):
+                        values = dev.read_measurement_values_float()
+                        mc_1p0, mc_2p5, mc_4p0, mc_10p0 = float(values[0]), float(values[1]), float(values[2]), float(values[3])
+                        try:
+                            self._debug_sample_counter += 1
+                            if self._debug_sample_counter % 10 == 1:
+                                write_connection_log(f"Sample UART float mc_2p5={mc_2p5}")
+                        except Exception:
+                            pass
+                    else:
+                        values = dev.read_measurement_values_uint16()
+                        mc_1p0, mc_2p5, mc_4p0, mc_10p0 = float(values[0]), float(values[1]), float(values[2]), float(values[3])
+                        try:
+                            # Heuristic: some UART firmwares return fixed-point values (e.g. 5000 for 0.5 µg/m³).
+                            max_val = max(mc_1p0, mc_2p5, mc_4p0, mc_10p0)
+                            if max_val > 1000.0:
+                                mc_1p0 /= 100000.0
+                                mc_2p5 /= 100000.0
+                                mc_4p0 /= 100000.0
+                                mc_10p0 /= 100000.0
+                        except Exception:
+                            pass
                     # Debug log every ~10th sample to verify values
                     try:
                         self._debug_sample_counter += 1
@@ -618,15 +909,24 @@ class Dashboard(tk.Toplevel):
         container = ttk.Frame(self)
         container.pack(fill=tk.BOTH, expand=True)
 
-        # Header row: connection indicator and big current PM2.5 value
+        # Header row: connection indicator
         header = ttk.Frame(container)
         header.pack(fill=tk.X, padx=8, pady=(8, 4))
 
         self.conn_label = tk.Label(header, text='● Disconnected', font=('Segoe UI', 10, 'bold'), fg='#e74c3c')
         self.conn_label.pack(side=tk.LEFT, padx=(0, 16))
 
-        self.now_big_label = tk.Label(header, text='PM2.5: - µg/m³', font=('Segoe UI', 14, 'bold'))
-        self.now_big_label.pack(side=tk.LEFT)
+        # Row with current values for all PM sizes
+        current_row = ttk.Frame(container)
+        current_row.pack(fill=tk.X, padx=8, pady=(0, 6))
+        self.cur_pm1_label = tk.Label(current_row, text='PM1.0: - µg/m³', font=('Segoe UI', 10))
+        self.cur_pm1_label.pack(side=tk.LEFT, padx=(0, 12))
+        self.cur_pm25_label = tk.Label(current_row, text='PM2.5: - µg/m³', font=('Segoe UI', 10))
+        self.cur_pm25_label.pack(side=tk.LEFT, padx=(0, 12))
+        self.cur_pm4_label = tk.Label(current_row, text='PM4: - µg/m³', font=('Segoe UI', 10))
+        self.cur_pm4_label.pack(side=tk.LEFT, padx=(0, 12))
+        self.cur_pm10_label = tk.Label(current_row, text='PM10: - µg/m³', font=('Segoe UI', 10))
+        self.cur_pm10_label.pack(side=tk.LEFT, padx=(0, 12))
 
         self.tabs = ttk.Notebook(container)
         self.tabs.pack(fill=tk.BOTH, expand=True)
@@ -740,8 +1040,23 @@ class Dashboard(tk.Toplevel):
         line_pm4.set_data(xs, ys4)
         line_pm10.set_data(xs, ys10)
 
+        # Dynamic Y scale: always starts at 0, expands to nice upper bound if needed
+        try:
+            ymax = max(max(ys1), max(ys25), max(ys4), max(ys10))
+            upper = _nice_upper_bound(ymax)
+            if upper <= 1.0:
+                upper = 1.0
+            ax.set_ylim(0.0, upper)
+        except Exception:
+            pass
+
+        # Always autoscale X to fit datetime range, keep current Y
         ax.relim()
-        ax.autoscale_view()
+        try:
+            ax.autoscale_view(scalex=True, scaley=False)
+        except TypeError:
+            # Fallback for older matplotlib
+            ax.autoscale_view()
         ax.figure.autofmt_xdate()
         canvas.draw_idle()
 
@@ -762,20 +1077,27 @@ class Dashboard(tk.Toplevel):
         else:
             self.conn_label.configure(text='● Disconnected', fg='#e74c3c')
 
-        # Update header current PM2.5 value
+        # Update current labels row
         all_samples = self.datastore.get_window(None)
         if all_samples:
             last = all_samples[-1]
             try:
-                val = last.pm25
-                if val == val:
-                    self.now_big_label.configure(text=f'PM2.5: {val:.4f} µg/m³')
-                else:
-                    self.now_big_label.configure(text='PM2.5: - µg/m³')
+                def _fmt(v):
+                    return f'{v:.4f}' if (v == v) else '-'
+                self.cur_pm1_label.configure(text=f'PM1.0: {_fmt(last.pm1)} µg/m³')
+                self.cur_pm25_label.configure(text=f'PM2.5: {_fmt(last.pm25)} µg/m³')
+                self.cur_pm4_label.configure(text=f'PM4: {_fmt(last.pm4)} µg/m³')
+                self.cur_pm10_label.configure(text=f'PM10: {_fmt(last.pm10)} µg/m³')
             except Exception:
-                self.now_big_label.configure(text='PM2.5: - µg/m³')
+                pass
         else:
-            self.now_big_label.configure(text='PM2.5: - µg/m³')
+            try:
+                self.cur_pm1_label.configure(text='PM1.0: - µg/m³')
+                self.cur_pm25_label.configure(text='PM2.5: - µg/m³')
+                self.cur_pm4_label.configure(text='PM4: - µg/m³')
+                self.cur_pm10_label.configure(text='PM10: - µg/m³')
+            except Exception:
+                pass
 
         for label, td in self.windows:
             self._update_tab(label, td)
@@ -795,7 +1117,9 @@ class App:
         self.datastore = DataStore()
         self.csv_logger = CSVLogger(CONFIG.log_dir)
         self.sample_queue = queue.Queue()
-        self.reader = SPS30Reader(CONFIG.uart_port, CONFIG.sample_period_s, self._on_sample)
+        # Restore last working port if available, otherwise None => auto-scan
+        remembered = load_last_port() or CONFIG.uart_port
+        self.reader = SPS30Reader(remembered, CONFIG.sample_period_s, self._on_sample)
 
         # Tk root (hidden owner for dashboard)
         self.root = tk.Tk()
@@ -856,6 +1180,45 @@ class App:
         self.menu_pause = Item(self._pause_menu_text(), on_pause_resume)
         self.menu_ports = Item('Ports', self._build_ports_menu())
         self.menu_test = Item('Connection test', self._on_connection_test)
+        # Autostart submenu
+        if is_autostart_supported():
+            def on_autostart(icon, item):
+                try:
+                    new_state = not is_autostart_enabled()
+                    if set_autostart_enabled(new_state):
+                        self._notify('Autostart enabled' if new_state else 'Autostart disabled')
+                except Exception:
+                    pass
+                self._rebuild_tray_menu()
+            def on_autostart_all(icon, item):
+                try:
+                    new_state = not is_autostart_enabled_all_users()
+                    if set_autostart_enabled_all_users(new_state):
+                        self._notify('Autostart (all users) enabled' if new_state else 'Autostart (all users) disabled')
+                except Exception:
+                    pass
+                self._rebuild_tray_menu()
+            def on_startup_shortcut(icon, item):
+                try:
+                    new_state = not is_startup_shortcut_enabled()
+                    if enable_startup_shortcut(new_state):
+                        self._notify('Startup folder shortcut enabled' if new_state else 'Startup folder shortcut removed')
+                except Exception:
+                    pass
+                self._rebuild_tray_menu()
+            self.menu_autostart_sub = TrayMenu(
+                Item('Current user (registry)', on_autostart, checked=lambda _: is_autostart_enabled()),
+                Item('All users (registry, admin)', on_autostart_all, checked=lambda _: is_autostart_enabled_all_users()),
+                Item('Startup folder shortcut', on_startup_shortcut, checked=lambda _: is_startup_shortcut_enabled()),
+            )
+            self.menu_autostart_root = Item('Autostart', self.menu_autostart_sub)
+        else:
+            self.menu_autostart_root = Item('Autostart (unsupported)', None, enabled=False)
+        # Clean sensor
+        def on_clean(icon, item):
+            ok = self.reader.start_fan_cleaning()
+            self._notify('Cleaning started' if ok else 'Cleaning not supported')
+        self.menu_clean = Item('Clean sensor', on_clean)
         self.menu_quit = Item('Quit', on_quit)
 
         self.icon = pystray.Icon(
@@ -867,6 +1230,10 @@ class App:
                 self.menu_pause,
                 self.menu_ports,
                 self.menu_test,
+                self.menu_autostart_root,
+                self.menu_clean,
+                getattr(self, 'menu_autostart_all', Item('Start with Windows (all users)', None, enabled=False)),
+                getattr(self, 'menu_startup_shortcut', Item('Startup folder shortcut', None, enabled=False)),
                 Item('—', None, enabled=False),
                 self.menu_quit,
             ),
@@ -894,6 +1261,44 @@ class App:
         self.menu_pause = Item(self._pause_menu_text(), on_pause_resume)
         self.menu_ports = Item('Ports', self._build_ports_menu())
         self.menu_test = Item('Connection test', self._on_connection_test)
+        if is_autostart_supported():
+            def on_autostart(icon, item):
+                try:
+                    new_state = not is_autostart_enabled()
+                    if set_autostart_enabled(new_state):
+                        self._notify('Autostart enabled' if new_state else 'Autostart disabled')
+                except Exception:
+                    pass
+                self._rebuild_tray_menu()
+            def on_autostart_all(icon, item):
+                try:
+                    new_state = not is_autostart_enabled_all_users()
+                    if set_autostart_enabled_all_users(new_state):
+                        self._notify('Autostart (all users) enabled' if new_state else 'Autostart (all users) disabled')
+                except Exception:
+                    pass
+                self._rebuild_tray_menu()
+            def on_startup_shortcut(icon, item):
+                try:
+                    new_state = not is_startup_shortcut_enabled()
+                    if enable_startup_shortcut(new_state):
+                        self._notify('Startup folder shortcut enabled' if new_state else 'Startup folder shortcut removed')
+                except Exception:
+                    pass
+                self._rebuild_tray_menu()
+            self.menu_autostart_sub = TrayMenu(
+                Item('Current user (registry)', on_autostart, checked=lambda _: is_autostart_enabled()),
+                Item('All users (registry, admin)', on_autostart_all, checked=lambda _: is_autostart_enabled_all_users()),
+                Item('Startup folder shortcut', on_startup_shortcut, checked=lambda _: is_startup_shortcut_enabled()),
+            )
+            self.menu_autostart_root = Item('Autostart', self.menu_autostart_sub)
+        else:
+            self.menu_autostart_root = Item('Autostart (unsupported)', None, enabled=False)
+        # Clean sensor
+        def on_clean(icon, item):
+            ok = self.reader.start_fan_cleaning()
+            self._notify('Cleaning started' if ok else 'Cleaning not supported')
+        self.menu_clean = Item('Clean sensor', on_clean)
         self.menu_quit = Item('Quit', on_quit)
 
         self.icon.menu = TrayMenu(
@@ -901,6 +1306,8 @@ class App:
             self.menu_pause,
             self.menu_ports,
             self.menu_test,
+            self.menu_autostart_root,
+            self.menu_clean,
             Item('—', None, enabled=False),
             self.menu_quit,
         )
@@ -1053,6 +1460,20 @@ class App:
     def run(self):
         # Start sampling
         self.reader.start()
+
+        # If auto/remembered connect doesn't yield data quickly, trigger a connection test once
+        def _kick_if_no_data():
+            try:
+                # No recent sample? attempt connection test automatically
+                if not self.reader.is_connected():
+                    self._on_connection_test()
+            except Exception:
+                pass
+        # Check after warmup + small grace
+        try:
+            self.root.after(7000, _kick_if_no_data)
+        except Exception:
+            pass
 
         # Start tray icon in a dedicated thread so that Tk mainloop remains responsive
         if self.icon is not None:

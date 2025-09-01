@@ -219,3 +219,121 @@
 [2025-09-01 11:25:20] Sample UART mc_2p5=0.14339
 [2025-09-01 11:26:31] Sample UART mc_2p5=0.49688
 [2025-09-01 11:27:41] Sample UART mc_2p5=0.65081
+[2025-09-01 11:29:15] Using UART driver on COM1
+[2025-09-01 11:29:15] UART device methods: ['read_auto_cleaning_interval', 'read_device_status_register', 'read_measurement_values_float', 'read_measurement_values_uint16', 'read_product_type', 'read_serial_number', 'read_version']
+[2025-09-01 11:29:24] UART read exception: ShdlcTimeoutError('Timeout while waiting for response from SHDLC device. Check connection to device and make sure it is powered on.')
+[2025-09-01 11:29:26] UART read exception: AttributeError("'NoneType' object has no attribute 'read_measurement_values_uint16'")
+[2025-09-01 11:29:27] Using UART driver on COM3
+[2025-09-01 11:29:27] UART device methods: ['read_auto_cleaning_interval', 'read_device_status_register', 'read_measurement_values_float', 'read_measurement_values_uint16', 'read_product_type', 'read_serial_number', 'read_version']
+[2025-09-01 11:29:27] Measurement started (UART, 261)
+[2025-09-01 11:29:34] Sample UART mc_2p5=2.0
+[2025-09-01 11:30:45] Sample UART mc_2p5=2.0
+[2025-09-01 11:31:30] --- Connection test started ---
+[2025-09-01 11:31:30] Ports to try: ['COM3']
+[2025-09-01 11:31:30] Trying COM3 at 115200 8N1...
+[2025-09-01 11:31:31] UART read exception: AttributeError("'NoneType' object has no attribute 'read_measurement_values_uint16'")
+[2025-09-01 11:31:31] OK on COM3 (SN: ACE26E8B52D43AD0)
+[2025-09-01 11:31:31] Using UART driver on COM3
+[2025-09-01 11:31:31] UART device methods: ['read_auto_cleaning_interval', 'read_device_status_register', 'read_measurement_values_float', 'read_measurement_values_uint16', 'read_product_type', 'read_serial_number', 'read_version']
+[2025-09-01 11:32:07] Sample UART mc_2p5=0.52166
+[2025-09-01 11:39:49] Using UART driver on COM1
+[2025-09-01 11:39:49] UART device methods: ['read_auto_cleaning_interval', 'read_device_status_register', 'read_measurement_values_float', 'read_measurement_values_uint16', 'read_product_type', 'read_serial_number', 'read_version']
+[2025-09-01 11:39:56] --- Connection test started ---
+[2025-09-01 11:39:56] Ports to try: ['COM3']
+[2025-09-01 11:39:56] Trying COM3 at 115200 8N1...
+[2025-09-01 11:39:57] OK on COM3 (SN: ACE26E8B52D43AD0)
+[2025-09-01 11:39:57] UART read exception: PortNotOpenError('Attempting to use a port that is not open')
+[2025-09-01 11:39:57] Using UART driver on COM3
+[2025-09-01 11:39:57] UART device methods: ['read_auto_cleaning_interval', 'read_device_status_register', 'read_measurement_values_float', 'read_measurement_values_uint16', 'read_product_type', 'read_serial_number', 'read_version']
+[2025-09-01 11:40:05] Sample UART float mc_2p5=2.609168529510498
+[2025-09-01 11:40:25] Using UART driver on COM3
+[2025-09-01 11:40:25] UART device methods: ['read_auto_cleaning_interval', 'read_device_status_register', 'read_measurement_values_float', 'read_measurement_values_uint16', 'read_product_type', 'read_serial_number', 'read_version']
+[2025-09-01 11:40:25] Measurement started (UART, 261)
+[2025-09-01 11:40:32] --- Connection test started ---
+[2025-09-01 11:40:32] Ports to try: ['COM3']
+[2025-09-01 11:40:32] Trying COM3 at 115200 8N1...
+[2025-09-01 11:40:32] UART read exception: PortNotOpenError('Attempting to use a port that is not open')
+[2025-09-01 11:40:32] OK on COM3 (SN: ACE26E8B52D43AD0)
+[2025-09-01 11:40:33] Using UART driver on COM3
+[2025-09-01 11:40:33] UART device methods: ['read_auto_cleaning_interval', 'read_device_status_register', 'read_measurement_values_float', 'read_measurement_values_uint16', 'read_product_type', 'read_serial_number', 'read_version']
+[2025-09-01 11:40:36] --- Connection test started ---
+[2025-09-01 11:40:36] Ports to try: ['COM3']
+[2025-09-01 11:40:36] Trying COM3 at 115200 8N1...
+[2025-09-01 11:40:36] OK on COM3 (SN: ACE26E8B52D43AD0)
+[2025-09-01 11:40:37] Using UART driver on COM3
+[2025-09-01 11:40:37] UART device methods: ['read_auto_cleaning_interval', 'read_device_status_register', 'read_measurement_values_float', 'read_measurement_values_uint16', 'read_product_type', 'read_serial_number', 'read_version']
+[2025-09-01 11:40:45] Sample UART float mc_2p5=1.4814389944076538
+[2025-09-01 11:43:14] Using UART driver on COM3
+[2025-09-01 11:43:14] UART device methods: ['read_auto_cleaning_interval', 'read_device_status_register', 'read_measurement_values_float', 'read_measurement_values_uint16', 'read_product_type', 'read_serial_number', 'read_version']
+[2025-09-01 11:43:14] Measurement started (UART, 261)
+[2025-09-01 11:43:21] --- Connection test started ---
+[2025-09-01 11:43:21] Ports to try: ['COM3']
+[2025-09-01 11:43:21] Trying COM3 at 115200 8N1...
+[2025-09-01 11:43:21] UART read exception: PortNotOpenError('Attempting to use a port that is not open')
+[2025-09-01 11:43:22] OK on COM3 (SN: ACE26E8B52D43AD0)
+[2025-09-01 11:43:22] Using UART driver on COM3
+[2025-09-01 11:43:22] UART device methods: ['read_auto_cleaning_interval', 'read_device_status_register', 'read_measurement_values_float', 'read_measurement_values_uint16', 'read_product_type', 'read_serial_number', 'read_version']
+[2025-09-01 11:43:29] Sample UART float mc_2p5=0.7036601305007935
+[2025-09-01 11:43:30] --- Connection test started ---
+[2025-09-01 11:43:31] Ports to try: ['COM3']
+[2025-09-01 11:43:31] Trying COM3 at 115200 8N1...
+[2025-09-01 11:43:31] OK on COM3 (SN: ACE26E8B52D43AD0)
+[2025-09-01 11:43:32] Using UART driver on COM3
+[2025-09-01 11:43:32] UART device methods: ['read_auto_cleaning_interval', 'read_device_status_register', 'read_measurement_values_float', 'read_measurement_values_uint16', 'read_product_type', 'read_serial_number', 'read_version']
+[2025-09-01 11:44:07] Sample UART float mc_2p5=1.366678237915039
+[2025-09-01 11:44:43] Sample UART float mc_2p5=1.5299880504608154
+[2025-09-01 11:45:18] Sample UART float mc_2p5=1.3771278858184814
+[2025-09-01 11:45:53] Sample UART float mc_2p5=1.6500598192214966
+[2025-09-01 11:46:28] Sample UART float mc_2p5=1.4965685606002808
+[2025-09-01 11:47:04] Sample UART float mc_2p5=1.377793312072754
+[2025-09-01 11:47:39] Sample UART float mc_2p5=1.557150959968567
+[2025-09-01 11:48:14] Sample UART float mc_2p5=1.0443522930145264
+[2025-09-01 11:48:49] Sample UART float mc_2p5=1.370583415031433
+[2025-09-01 11:49:25] Sample UART float mc_2p5=1.2668063640594482
+[2025-09-01 11:50:00] Sample UART float mc_2p5=1.021560788154602
+[2025-09-01 11:50:35] Sample UART float mc_2p5=1.3257912397384644
+[2025-09-01 11:51:11] Sample UART float mc_2p5=1.3155441284179688
+[2025-09-01 11:51:46] Sample UART float mc_2p5=1.1220283508300781
+[2025-09-01 11:52:21] Sample UART float mc_2p5=1.371840000152588
+[2025-09-01 11:53:48] Using UART driver on COM3
+[2025-09-01 11:53:48] UART device methods: ['read_auto_cleaning_interval', 'read_device_status_register', 'read_measurement_values_float', 'read_measurement_values_uint16', 'read_product_type', 'read_serial_number', 'read_version']
+[2025-09-01 11:53:48] Measurement started (UART, 261)
+[2025-09-01 11:53:55] --- Connection test started ---
+[2025-09-01 11:53:55] Ports to try: ['COM3']
+[2025-09-01 11:53:55] Trying COM3 at 115200 8N1...
+[2025-09-01 11:53:56] UART read exception: PortNotOpenError('Attempting to use a port that is not open')
+[2025-09-01 11:53:56] OK on COM3 (SN: ACE26E8B52D43AD0)
+[2025-09-01 11:53:56] Using UART driver on COM3
+[2025-09-01 11:53:56] UART device methods: ['read_auto_cleaning_interval', 'read_device_status_register', 'read_measurement_values_float', 'read_measurement_values_uint16', 'read_product_type', 'read_serial_number', 'read_version']
+[2025-09-01 11:54:04] Sample UART float mc_2p5=3.612236261367798
+[2025-09-01 11:54:39] Sample UART float mc_2p5=1.4999711513519287
+[2025-09-01 11:55:15] Sample UART float mc_2p5=1.1600539684295654
+[2025-09-01 12:00:18] Using UART driver on COM3
+[2025-09-01 12:00:18] UART device methods: ['read_auto_cleaning_interval', 'read_device_status_register', 'read_measurement_values_float', 'read_measurement_values_uint16', 'read_product_type', 'read_serial_number', 'read_version']
+[2025-09-01 12:00:18] Measurement started (UART, 261)
+[2025-09-01 12:00:25] --- Connection test started ---
+[2025-09-01 12:00:25] Ports to try: ['COM3']
+[2025-09-01 12:00:25] Trying COM3 at 115200 8N1...
+[2025-09-01 12:00:25] UART read exception: PortNotOpenError('Attempting to use a port that is not open')
+[2025-09-01 12:00:26] OK on COM3 (SN: ACE26E8B52D43AD0)
+[2025-09-01 12:00:26] Using UART driver on COM3
+[2025-09-01 12:00:26] UART device methods: ['read_auto_cleaning_interval', 'read_device_status_register', 'read_measurement_values_float', 'read_measurement_values_uint16', 'read_product_type', 'read_serial_number', 'read_version']
+[2025-09-01 12:00:34] Sample UART float mc_2p5=1.204398512840271
+[2025-09-01 12:01:09] Sample UART float mc_2p5=1.379179835319519
+[2025-09-01 12:01:44] Sample UART float mc_2p5=1.2091217041015625
+[2025-09-01 12:02:19] Sample UART float mc_2p5=1.2181024551391602
+[2025-09-01 12:02:55] Sample UART float mc_2p5=1.1552960872650146
+[2025-09-01 12:03:30] Sample UART float mc_2p5=1.2062947750091553
+[2025-09-01 12:04:05] Sample UART float mc_2p5=1.0410419702529907
+[2025-09-01 12:05:24] Using UART driver on COM3
+[2025-09-01 12:05:24] UART device methods: ['read_auto_cleaning_interval', 'read_device_status_register', 'read_measurement_values_float', 'read_measurement_values_uint16', 'read_product_type', 'read_serial_number', 'read_version']
+[2025-09-01 12:05:24] Measurement started (UART, 261)
+[2025-09-01 12:05:31] --- Connection test started ---
+[2025-09-01 12:05:31] Ports to try: ['COM3']
+[2025-09-01 12:05:31] Trying COM3 at 115200 8N1...
+[2025-09-01 12:05:31] UART read exception: PortNotOpenError('Attempting to use a port that is not open')
+[2025-09-01 12:05:31] OK on COM3 (SN: ACE26E8B52D43AD0)
+[2025-09-01 12:05:32] Using UART driver on COM3
+[2025-09-01 12:05:32] UART device methods: ['read_auto_cleaning_interval', 'read_device_status_register', 'read_measurement_values_float', 'read_measurement_values_uint16', 'read_product_type', 'read_serial_number', 'read_version']
+[2025-09-01 12:05:39] Sample UART float mc_2p5=1.2549903392791748
+[2025-09-01 12:06:15] Sample UART float mc_2p5=1.2110105752944946

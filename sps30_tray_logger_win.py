@@ -67,9 +67,14 @@ try:
     matplotlib.use('TkAgg')
     from matplotlib.figure import Figure
     from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+    try:
+        from matplotlib.ticker import FormatStrFormatter as _FormatStrFormatter
+    except Exception:
+        _FormatStrFormatter = None
 except Exception:
     Figure = None
     FigureCanvasTkAgg = None
+    _FormatStrFormatter = None
 
 
 class CONFIG:
@@ -79,10 +84,10 @@ class CONFIG:
     # Logs directory: when frozen (EXE), use %LOCALAPPDATA%\SPS30 Tray Logger\logs; otherwise ./logs
     if getattr(sys, 'frozen', False):
         _base = os.environ.get('LOCALAPPDATA') or os.path.expanduser('~')
-        log_dir = os.path.join(_base, 'SPS30 Tray Logger', 'logs')
+        log_dir = os.path.join(_base, 'StratusVision SFP', 'logs')
     else:
         log_dir = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'logs')
-    app_name = 'SPS30 Tray Logger'
+    app_name = 'StratusVision SFP'
 
 
 Sample = namedtuple('Sample', ['ts', 'pm1', 'pm25', 'pm4', 'pm10'])
@@ -103,6 +108,29 @@ def write_connection_log(message):
     except Exception:
         pass
 
+
+def get_asset_path(*parts):
+    try:
+        base = getattr(sys, '_MEIPASS', None) or os.path.abspath(os.path.dirname(__file__))
+        return os.path.join(base, 'assets', *parts)
+    except Exception:
+        return None
+
+
+def load_logo_pil(desired_size=64):
+    if Image is None:
+        return None
+    try:
+        path = get_asset_path('logo.png')
+        if path and os.path.isfile(path):
+            img = Image.open(path).convert('RGBA')
+            if desired_size:
+                img = img.copy()
+                img.thumbnail((desired_size, desired_size), Image.LANCZOS)
+            return img
+    except Exception:
+        return None
+    return None
 
 def detect_serial_ports():
     """Return a list of available COM ports on Windows like ["COM3", "COM5"].
@@ -429,6 +457,17 @@ class SPS30Reader:
                         time.sleep(0.1)
                     values = self._device.read_measurement_values_uint16()
                     mc_1p0, mc_2p5, mc_4p0, mc_10p0 = float(values[0]), float(values[1]), float(values[2]), float(values[3])
+                    try:
+                        # Heuristic: some UART firmwares return fixed-point values (e.g. 5000 for 0.5 µg/m³).
+                        # If readings look unrealistically large, downscale by 1e5 to land in typical µg/m³ range.
+                        max_val = max(mc_1p0, mc_2p5, mc_4p0, mc_10p0)
+                        if max_val > 1000.0:
+                            mc_1p0 /= 100000.0
+                            mc_2p5 /= 100000.0
+                            mc_4p0 /= 100000.0
+                            mc_10p0 /= 100000.0
+                    except Exception:
+                        pass
                     # Debug log every ~10th sample to verify values
                     try:
                         self._debug_sample_counter += 1
@@ -635,6 +674,11 @@ class Dashboard(tk.Toplevel):
                 ax.set_ylim(bottom=0.0)
             except Exception:
                 pass
+            try:
+                if _FormatStrFormatter is not None:
+                    ax.yaxis.set_major_formatter(_FormatStrFormatter('%.4f'))
+            except Exception:
+                pass
             self.figures[label] = fig
             self.axes[label] = ax
 
@@ -654,7 +698,7 @@ class Dashboard(tk.Toplevel):
         def fmt(v):
             if v is None or (isinstance(v, float) and (v != v)):
                 return '-'
-            return f'{v:.3f}'
+            return f'{v:.4f}'
 
         if not samples:
             return 'Now: - / - / - / -', 'Avg: - / - / - / -', 'Max: - / - / - / -'
@@ -725,7 +769,7 @@ class Dashboard(tk.Toplevel):
             try:
                 val = last.pm25
                 if val == val:
-                    self.now_big_label.configure(text=f'PM2.5: {val:.3f} µg/m³')
+                    self.now_big_label.configure(text=f'PM2.5: {val:.4f} µg/m³')
                 else:
                     self.now_big_label.configure(text='PM2.5: - µg/m³')
             except Exception:
@@ -792,7 +836,7 @@ class App:
     def _build_tray_icon(self):
         if pystray is None:
             return
-        image = create_tray_icon_image()
+        image = load_logo_pil(desired_size=64) or create_tray_icon_image()
 
         def on_open(icon, item):
             self.open_dashboard()

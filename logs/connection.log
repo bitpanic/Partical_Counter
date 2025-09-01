@@ -167,3 +167,55 @@
 [2025-09-01 10:37:29] SHDLC device methods: ['read_auto_cleaning_interval', 'read_device_status_register', 'read_measured_value', 'read_version']
 [2025-09-01 10:37:36] Legacy raw measurement: ((0.5326587557792664, 0.5632665157318115, 0.563266396522522, 0.563266396522522), (3.678819417953491, 4.2378458976745605, 4.251067638397217, 4.252265453338623, 4.2529497146606445), 0.4040088653564453) (tuple)
 [2025-09-01 10:38:06] Legacy raw measurement: ((0.7207169532775879, 0.7621309161186218, 0.7621307969093323, 0.7621307969093323), (4.97764778137207, 5.734041213989258, 5.751931190490723, 5.753551483154297, 5.754477500915527), 0.4048922061920166) (tuple)
+[2025-09-01 10:51:44] Using UART driver on COM1
+[2025-09-01 10:51:44] UART device methods: ['read_auto_cleaning_interval', 'read_device_status_register', 'read_measurement_values_float', 'read_measurement_values_uint16', 'read_product_type', 'read_serial_number', 'read_version']
+[2025-09-01 10:51:52] UART read exception: AttributeError("'NoneType' object has no attribute 'read_measurement_values_uint16'")
+[2025-09-01 10:51:53] Using UART driver on COM3
+[2025-09-01 10:51:53] UART device methods: ['read_auto_cleaning_interval', 'read_device_status_register', 'read_measurement_values_float', 'read_measurement_values_uint16', 'read_product_type', 'read_serial_number', 'read_version']
+[2025-09-01 10:51:53] Measurement started (UART, 261)
+[2025-09-01 10:52:00] Sample UART mc_2p5=3.0
+[2025-09-01 10:53:11] Sample UART mc_2p5=1.0
+[2025-09-01 10:54:21] Sample UART mc_2p5=1.0
+[2025-09-01 10:56:16] Using UART driver on COM1
+[2025-09-01 10:56:16] UART device methods: ['read_auto_cleaning_interval', 'read_device_status_register', 'read_measurement_values_float', 'read_measurement_values_uint16', 'read_product_type', 'read_serial_number', 'read_version']
+[2025-09-01 10:56:24] UART read exception: AttributeError("'NoneType' object has no attribute 'read_measurement_values_uint16'")
+[2025-09-01 10:56:25] Using UART driver on COM3
+[2025-09-01 10:56:25] UART device methods: ['read_auto_cleaning_interval', 'read_device_status_register', 'read_measurement_values_float', 'read_measurement_values_uint16', 'read_product_type', 'read_serial_number', 'read_version']
+[2025-09-01 10:56:25] Measurement started (UART, 261)
+[2025-09-01 10:56:32] Sample UART mc_2p5=1.0
+[2025-09-01 10:59:19] Using UART driver on COM1
+[2025-09-01 10:59:19] UART device methods: ['read_auto_cleaning_interval', 'read_device_status_register', 'read_measurement_values_float', 'read_measurement_values_uint16', 'read_product_type', 'read_serial_number', 'read_version']
+[2025-09-01 10:59:27] UART read exception: AttributeError("'NoneType' object has no attribute 'read_measurement_values_uint16'")
+[2025-09-01 10:59:28] Using UART driver on COM3
+[2025-09-01 10:59:28] UART device methods: ['read_auto_cleaning_interval', 'read_device_status_register', 'read_measurement_values_float', 'read_measurement_values_uint16', 'read_product_type', 'read_serial_number', 'read_version']
+[2025-09-01 10:59:28] Measurement started (UART, 261)
+[2025-09-01 10:59:35] Sample UART mc_2p5=2.0
+[2025-09-01 10:59:59] --- Connection test started ---
+[2025-09-01 10:59:59] Ports to try: ['COM3']
+[2025-09-01 10:59:59] Trying COM3 at 115200 8N1...
+[2025-09-01 11:00:00] OK on COM3 (SN: ACE26E8B52D43AD0)
+[2025-09-01 11:00:00] Using UART driver on COM3
+[2025-09-01 11:00:00] UART device methods: ['read_auto_cleaning_interval', 'read_device_status_register', 'read_measurement_values_float', 'read_measurement_values_uint16', 'read_product_type', 'read_serial_number', 'read_version']
+[2025-09-01 11:00:50] Sample UART mc_2p5=42570.0
+[2025-09-01 11:16:45] Using UART driver on COM1
+[2025-09-01 11:16:45] UART device methods: ['read_auto_cleaning_interval', 'read_device_status_register', 'read_measurement_values_float', 'read_measurement_values_uint16', 'read_product_type', 'read_serial_number', 'read_version']
+[2025-09-01 11:16:53] UART read exception: AttributeError("'NoneType' object has no attribute 'read_measurement_values_uint16'")
+[2025-09-01 11:16:53] Using UART driver on COM3
+[2025-09-01 11:16:53] UART device methods: ['read_auto_cleaning_interval', 'read_device_status_register', 'read_measurement_values_float', 'read_measurement_values_uint16', 'read_product_type', 'read_serial_number', 'read_version']
+[2025-09-01 11:16:53] Measurement started (UART, 261)
+[2025-09-01 11:17:01] Sample UART mc_2p5=2.0
+[2025-09-01 11:18:11] Sample UART mc_2p5=1.0
+[2025-09-01 11:19:19] --- Connection test started ---
+[2025-09-01 11:19:19] Ports to try: ['COM3']
+[2025-09-01 11:19:19] Trying COM3 at 115200 8N1...
+[2025-09-01 11:19:20] OK on COM3 (SN: ACE26E8B52D43AD0)
+[2025-09-01 11:19:20] Using UART driver on COM3
+[2025-09-01 11:19:20] UART device methods: ['read_auto_cleaning_interval', 'read_device_status_register', 'read_measurement_values_float', 'read_measurement_values_uint16', 'read_product_type', 'read_serial_number', 'read_version']
+[2025-09-01 11:19:28] Sample UART mc_2p5=0.38808
+[2025-09-01 11:20:38] Sample UART mc_2p5=0.60662
+[2025-09-01 11:21:49] Sample UART mc_2p5=0.31444
+[2025-09-01 11:22:59] Sample UART mc_2p5=0.2889
+[2025-09-01 11:24:10] Sample UART mc_2p5=0.06106
+[2025-09-01 11:25:20] Sample UART mc_2p5=0.14339
+[2025-09-01 11:26:31] Sample UART mc_2p5=0.49688
+[2025-09-01 11:27:41] Sample UART mc_2p5=0.65081
